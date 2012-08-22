@@ -1,0 +1,13 @@
+extends ../layout
+
+block content
+ div(class="span7")
+  h1
+    legend Sign Up
+
+  form(action="/sign-up",method="post")
+    input(type="hidden",name="_method",value="put")
+    each formInput in formSchema
+      p
+        | #{formInput.label} 
+        input(type="#{formInput.type}",name="#{formInput.name}",value="#{formInput.value}",class="#{formInput.class}")

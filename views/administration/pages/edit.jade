@@ -1,0 +1,21 @@
+extends ../../layout
+
+block content
+  div(class="span7")
+    legend
+      h1 Edit Page
+    include ../../flashify
+    
+    form(action="#{globals.href.admin}pages#{page.url}/edit",method="post")
+      input(type="hidden",name="_method",value="put")
+      input.span6(type="text",value="#{page.url}",placeholder="/URL")
+      br
+      textarea.span6(rows=10,placeholder="Page Content")= page.content
+      br
+      input(type="checkbox",value="1")
+      small  Disable HTML
+      span.offset1
+      input(type="checkbox",value="1",checked)
+      small  Display in Navigation
+      p
+      input.btn.btn-primary(type="submit",name="submit",value="Update")

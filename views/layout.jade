@@ -1,0 +1,31 @@
+!!! 5
+html(lang='en')
+head
+    meta(charset='utf-8')
+    title= globals.site.name
+    
+    link(href="/styles/bootstrap.css", rel="stylesheet")
+    link(href="/styles/bootstrap-responsive.css", rel="stylesheet")
+    script(src="/scripts/jquery.js")
+    script(src="/scripts/jquery.timeago.js")
+    script(src="/scripts/bootstrap.js")
+    
+    style
+      body {
+        padding-top: 60px;
+      } 
+  body
+    div(class="navbar navbar-fixed-top")
+      .navbar-inner
+        .container
+          a.brand(href='/') #{globals.site.name}
+          include navigation/top
+                  
+    div(class="container")
+      include navigation/left
+      
+      block content
+        
+      include navigation/right
+    include footer.jade
+      

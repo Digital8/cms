@@ -1,0 +1,14 @@
+extends ../layout
+
+block content
+  legend
+    h1
+      a(href="/question/#{question.id}")= question.title
+      small &nbsp;Posted by 
+        a(href="/user/#{question.owner.alias}")= question.owner.displayName
+  p
+    i.icon-time &nbsp;
+    small Asked 
+      = question.modified
+    hr
+    = question.text

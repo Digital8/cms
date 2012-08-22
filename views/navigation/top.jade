@@ -1,0 +1,32 @@
+ul#main-menu-right(class="nav pull-right")
+  li.dropdown(id="preview-menu")
+    a(class="dropdown-toggle",data-toggle="dropdown",href="#") 
+      i.icon-user 
+      | &nbsp; #{objUser.alias}
+      b.caret
+    ul.dropdown-menu
+      if (!objUser.isAuthed())
+        if(modules.login == true)
+          li
+            a(href="/login",id="login") #{globals.locale.login}
+          li.divider
+        if(modules.register == true)
+          li
+            a(href="/sign-up") #{globals.locale.register}
+      else
+        li
+          a(href="#")
+            i.icon-wrench
+            | &nbsp; Account
+          
+          if (objUser.isAdmin())
+            a(href="#")
+              i.icon-eye-open
+              | &nbsp; Administration
+            
+        li.divider
+        li
+          
+          a(href="/logout")
+            i.icon-off
+            | &nbsp; Logout

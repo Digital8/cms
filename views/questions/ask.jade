@@ -1,0 +1,23 @@
+extends ../layout
+
+block content
+  legend
+    h3 Ask Question
+  form(action="/questions/ask",method="post")
+    include ../flashify
+    p
+      input(type="text",name="title",placeholder="Question Title")
+    p
+      select(name="category")
+        option(value="0") -- Select Category --
+        each category in categories
+          option(value="#{category.category_id}")= category.name
+        
+    textarea.span6(name="question",rows=10,placeholder="Some placeholder stuff here..")
+    
+    p.well.span7
+      input(type="checkbox")
+      | &nbsp; I agree for TFA to deduct $x.xx from my funds for this question.  
+    div.row
+    p
+      input.btn.btn-primary(type="submit",value="Ask The Experts")

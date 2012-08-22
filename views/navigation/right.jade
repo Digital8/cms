@@ -1,0 +1,21 @@
+div(class="span3 well")
+  ul(class="nav nav-list")
+    li(class="nav-header")
+      | Navigation
+    li
+      a(href="/") Home
+    if(modules.login == true)  
+      li
+        a(href="/login") Login
+    if(modules.register == true)  
+      li
+        a(href="/sign-up") Sign Up!
+    each page in pages
+      li
+        p
+          a(href=page.url) #{page.header}
+          if (objUser.checkRights('CP'))
+            | &nbsp;
+            a(href="#{globals.href.admin}pages#{page.url}/edit")
+              i.icon-edit
+        

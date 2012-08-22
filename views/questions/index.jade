@@ -1,0 +1,38 @@
+extends ../layout
+
+block content
+  ul(id="myTab",class="nav nav-tabs")
+    li
+      h3 All Questions
+    
+    li(class="active offset1")
+      a(href="#home",data-toggle="tab") Newest
+    li
+      a(href="#profile",data-toggle="tab") Featured 
+        
+    li
+      a(href="#profile",data-toggle="tab") Unanswered
+    li.pull-right
+      i.icon-search &nbsp;
+      input(type="text",class="input-medium search-query",placeholder="Search..")
+  table.table.table-striped(width="100%")
+    each question in questions
+      tr
+        td(width="20%")
+          h4 0
+            small &nbsp; Answers
+          hr
+          h4= question.views
+            small &nbsp; View
+              if(question.views != 1) 
+                | s
+        td
+          h4
+            a(href="/question/#{question.id}")= question.title
+          p= question.text
+        td
+          p Asked by 
+            br
+            a(href="/user/#{question.owner.alias}")= question.owner.displayName
+            br
+            small= question.modified
