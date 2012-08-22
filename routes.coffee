@@ -37,6 +37,9 @@ module.exports = (app) ->
   
   app.get '/logout', controllers.misc.logout
   
+  
+  # Administration
+  app.get '/administration', controllers.admin_index.index
   app.get '/administration/pages/:id/edit', helpers.checkModule('pages'), helpers.requireAuth, helpers.checkRights('CP'), controllers.admin_pages.edit
   app.put '/administration/pages/:id/edit', helpers.checkModule('pages'), helpers.requireAuth, helpers.checkRights('CP'), controllers.admin_pages.update
   

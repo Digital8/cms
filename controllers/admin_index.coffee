@@ -10,6 +10,7 @@
 
 # GET
 exports.index = (req,res) ->
+  res.render 'administration/index'
   
 # GET
 exports.view = (req,res) ->

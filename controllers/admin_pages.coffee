@@ -45,6 +45,7 @@ exports.edit = (req,res) ->
 
 # PUT
 exports.update = (req,res) ->
+  console.log req.body
   req.flash('info','some message here')
   res.redirect 'back'
 

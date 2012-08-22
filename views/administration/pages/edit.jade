@@ -8,9 +8,9 @@ block content
     
     form(action="#{globals.href.admin}pages#{page.url}/edit",method="post")
       input(type="hidden",name="_method",value="put")
-      input.span6(type="text",value="#{page.url}",placeholder="/URL")
+      input.span6(type="text",value="#{page.url}",placeholder="/URL",name="url")
       br
-      textarea.span6(rows=10,placeholder="Page Content")= page.content
+      textarea.span6(rows=10,placeholder="Page Content",name="content")= page.content
       br
       input(type="checkbox",value="1")
       small  Disable HTML
