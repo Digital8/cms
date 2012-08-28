@@ -1,0 +1,9 @@
+extends ../../layout
+
+block content
+  div.span8
+    legend
+      h3 Groups
+    - each group in groups
+      p= group.group_name
+      

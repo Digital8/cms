@@ -22,3 +22,6 @@ module.exports = class Page
 	  @enabled = pageData.page_enabled
 	  @htmlEnabled = pageData.page_enable_html
 	  @commentsEnabled = pageData.page_enable_comments
+	  @groupAccess = pageData.page_group_access.split('.')
+	  
+	  if @groupAccess[0] is '' then @groupAccess.shift() # Drop off annoying blank ''

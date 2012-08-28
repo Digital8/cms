@@ -23,10 +23,11 @@ classes =
 # Load in helpers
 helpers =
   requireAuth: system.load.helper 'requireAuth'
+  checkGroups: system.load.helper 'checkGroups'
 
 exports.index = (req,res) ->
   
-exports.view = (req,res) ->
+exports.view = (req,res,next) ->
   url = req.params
   
   models.page.getPageByUrl url, (err,results) ->
@@ -35,6 +36,7 @@ exports.view = (req,res) ->
       if url.pop() is '/' then res.render 'errors/no_index' else res.render 'errors/404'
     else
       page = new classes.page results.pop()
+      console.log helpers.checkGroups page.groupAccess, res.locals.objUser
       if page.restricted
         helpers.requireAuth req, res, ->
           res.render 'pages/page', objPage: page

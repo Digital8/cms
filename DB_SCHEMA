@@ -1,0 +1,164 @@
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- Database: `nodefu`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `nodefu_admin`
+--
+
+CREATE TABLE IF NOT EXISTS `nodefu_admin` (
+  `admin_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `admin_rights` varchar(5) NOT NULL,
+  `admin_image` varchar(50) NOT NULL,
+  `admin_title` varchar(50) NOT NULL,
+  `admin_link` varchar(100) NOT NULL,
+  PRIMARY KEY (`admin_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `nodefu_admin`
+--
+
+INSERT INTO `nodefu_admin` (`admin_id`, `admin_rights`, `admin_image`, `admin_title`, `admin_link`) VALUES
+(1, 'CP', '', 'Web Pages', 'pages'),
+(2, 'M', '', 'Members', 'members'),
+(3, 'FAQ', '', 'FAQ', 'faq'),
+(4, 'G', '', 'Groups', 'groups');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `nodefu_categories`
+--
+
+CREATE TABLE IF NOT EXISTS `nodefu_categories` (
+  `category_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `category_name` varchar(100) NOT NULL,
+  PRIMARY KEY (`category_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `nodefu_categories`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `nodefu_groups`
+--
+
+CREATE TABLE IF NOT EXISTS `nodefu_groups` (
+  `group_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `group_name` varchar(100) NOT NULL,
+  `group_description` text NOT NULL,
+  PRIMARY KEY (`group_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `nodefu_groups`
+--
+
+INSERT INTO `nodefu_groups` (`group_id`, `group_name`, `group_description`) VALUES
+(1, 'Testers', 'We are the beta testers');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `nodefu_news`
+--
+
+CREATE TABLE IF NOT EXISTS `nodefu_news` (
+  `news_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `news_title` varchar(100) DEFAULT NULL,
+  `news_body` text,
+  `news_poster` int(10) unsigned DEFAULT NULL,
+  `news_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `news_enable_comments` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`news_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `nodefu_news`
+--
+
+INSERT INTO `nodefu_news` (`news_id`, `news_title`, `news_body`, `news_poster`, `news_created`, `news_enable_comments`) VALUES
+(1, 'NodeFu release #1', 'Welcome to the release of the NodeFu NodeJS CMS!', 1, '2012-06-20 07:22:40', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `nodefu_pages`
+--
+
+CREATE TABLE IF NOT EXISTS `nodefu_pages` (
+  `page_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `page_url` varchar(100) NOT NULL,
+  `page_action` varchar(128) NOT NULL DEFAULT '0',
+  `page_controller` varchar(128) NOT NULL DEFAULT '0',
+  `page_title` varchar(50) NOT NULL,
+  `page_header` varchar(75) NOT NULL,
+  `page_content` mediumtext NOT NULL,
+  `page_require_auth` tinyint(4) NOT NULL,
+  `page_enable_html` tinyint(1) NOT NULL DEFAULT '0',
+  `page_enable_comments` tinyint(1) NOT NULL DEFAULT '1',
+  `page_navigation_link` tinyint(1) NOT NULL DEFAULT '1',
+  `page_enabled` tinyint(1) NOT NULL DEFAULT '1',
+  `page_order` int(11) NOT NULL DEFAULT '0',
+  `page_group_access` text NOT NULL,
+  PRIMARY KEY (`page_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+
+--
+-- Dumping data for table `nodefu_pages`
+--
+
+INSERT INTO `nodefu_pages` (`page_id`, `page_url`, `page_action`, `page_controller`, `page_title`, `page_header`, `page_content`, `page_require_auth`, `page_enable_html`, `page_enable_comments`, `page_navigation_link`, `page_enabled`, `page_order`, `page_group_access`) VALUES
+(6, '/', '0', '0', 'Home', 'Home Page', 'Welcome to home page!', 0, 0, 1, 1, 1, 0, ''),
+(8, '/login', 'GET', 'misc.login', 'Login', '', '', 0, 0, 1, 1, 1, 0, ''),
+(9, '/login', 'POST', 'misc.login', '', '', '', 0, 0, 0, 0, 1, 0, ''),
+(10, '/logout', 'GET', 'misc.logout', '', '', '', 0, 0, 0, 0, 1, 0, ''),
+(13, '/administration/page/:id/edit', 'GET', 'admin_pages.edit', '', '', '', 0, 0, 0, 0, 1, 0, ''),
+(14, '/administration', 'GET', 'admin_index.index', '', '', '', 0, 0, 1, 0, 1, 0, ''),
+(15, '/administration/pages', 'GET', 'admin_pages.index', '', '', '', 0, 0, 1, 0, 1, 0, ''),
+(17, '/articles', 'GET', 'articles.index', 'Articles', '', '', 0, 0, 1, 1, 0, 0, ''),
+(18, '/test', '0', '0', 'Test', 'test', 'testaroo', 0, 0, 1, 1, 1, 0, '.1'),
+(19, '/administration/groups', 'GET', 'admin_groups.index', 'Admin Groups', '', '', 0, 0, 1, 0, 1, 0, '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `nodefu_users`
+--
+
+CREATE TABLE IF NOT EXISTS `nodefu_users` (
+  `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_alias` varchar(75) NOT NULL,
+  `user_password` varchar(100) NOT NULL,
+  `user_email` varchar(100) NOT NULL,
+  `user_show_email` tinyint(1) NOT NULL,
+  `user_level` int(11) NOT NULL DEFAULT '103',
+  `user_groups` text NOT NULL,
+  `user_rights` text NOT NULL,
+  `user_created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`user_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `nodefu_users`
+--
+
+INSERT INTO `nodefu_users` (`user_id`, `user_alias`, `user_password`, `user_email`, `user_show_email`, `user_level`, `user_groups`, `user_rights`, `user_created_at`) VALUES
+(1, 'Administrator', '7e18d77120b0458d02e9756642c4365df93e263da7b738e6c1aa75d72c5daf73', 'brendan@digital8.com.au', 0, 104, '.2', 'M.CP.G', '0000-00-00 00:00:00'),
+(2, 'guest', '7e18d77120b0458d02e9756642c4365df93e263da7b738e6c1aa75d72c5daf73', 'guest@fakey.com', 0, 103, '', '', '2012-06-15 17:36:37');

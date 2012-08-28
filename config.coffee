@@ -11,7 +11,7 @@
 module.exports =
   globals:
     site:
-      name: 'Super awthum CMS name'
+      name: 'NodeFu'
     href:
       admin   : '/administration/'
       images  : '/images/'

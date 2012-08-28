@@ -3,8 +3,8 @@
  *
  * Helper to restrict a page requiring authentication
  *
- * @package   Time for Advice
- * @author    Brendan Scarvell <bscarvell@gmail.com>
+ * @package   Digital8
+ * @author    Brendan Scarvell <brendan@digital8.com.au>
  * @copyright Copyright (c) 2012 - Current
  ###
 

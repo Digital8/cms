@@ -20,7 +20,6 @@ fs.readdirSync("./controllers").forEach (module) ->
 # Load in the helpers
 helpers =
   requireAuth: system.load.helper 'requireAuth'
-  checkModule: system.load.helper 'checkModule'
   checkRights: system.load.helper 'checkRights'
 
 models = 

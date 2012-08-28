@@ -20,27 +20,30 @@ models =
   user: system.load.model 'user'
 
 exports.login = (req, res) ->
-  locale = system.load.locale 'login'
-  
-  if req.body.username? and req.body.password?
-    req.body.username ?= ''
-    req.body.password ?= ''
-    
-    credentials = 
-      username: req.body.username
-      password: helpers.hash(req.body.password)
-    
-    models.user.login credentials, (err, results) ->
-      if err then throw err
-      if not results? or results.length == 0 
-        req.flash('error','Incorrect Login')
-        res.redirect '/login'
-      else
-        results = results.pop()
-        req.session.user_id = results.user_id
-        res.redirect '/'
+  if res.locals.objUser.isAuthed()
+    res.redirect '/'
   else
-    res.render "login/index", locale: locale
+    locale = system.load.locale 'login'
+  
+    if req.body.username? and req.body.password?
+      req.body.username ?= ''
+      req.body.password ?= ''
+    
+      credentials = 
+        username: req.body.username
+        password: helpers.hash(req.body.password)
+    
+      models.user.login credentials, (err, results) ->
+        if err then throw err
+        if not results? or results.length == 0 
+          req.flash('error','Incorrect Login')
+          res.redirect '/login'
+        else
+          results = results.pop()
+          req.session.user_id = results.user_id
+          res.redirect '/'
+    else
+      res.render "login/index", locale: locale
 
 exports.logout = (req, res) ->
   delete req.session.user_id

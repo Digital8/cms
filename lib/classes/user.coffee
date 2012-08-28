@@ -17,6 +17,7 @@ accountLevel =
 module.exports = class User
 	constructor: (userData) ->
 	  userData.user_rights ?= ''
+	  userData.user_groups ?= ''
 	  @id = userData.user_id or 0
 	  @alias = userData.user_alias or 'Guest'
 	  @firstName = userData.user_first_name or ''
@@ -25,7 +26,10 @@ module.exports = class User
 	  @email = userData.user_email or ''
 	  @level = userData.user_level or 0
 	  @userRights = userData.user_rights.split '.'
-	
+	  @groups = userData.user_groups.split '.'
+	  
+	  if @groups[0] is '' then @groups.shift() # Drop off annoying blank ''
+	  
 	isMember: ->
 	  return (@level >= accountLevel.member) ? true : false
 	
@@ -62,5 +66,17 @@ module.exports = class User
   	      if priv == right
   	        authorized = true
   	        break
+
+	    return authorized
+	    
+  checkGroup: (gid) ->
+	  if @isRoot()
+	    return true
+	  else
+	    authorized = false
+	    for group in @groups
+	      if group == gid
+	        authorized = true
+	        break
 
 	    return authorized
