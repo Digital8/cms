@@ -1,13 +1,13 @@
 extends ../layout
 
 block content
-  div(class="span7")
+  div(class="span8")
     legend
-      h1= locale.header
+      h3= locale.header
     include ../flashify
     form(action="/login", method="post")
-      input(type="text",name="username",value="",placeholder="#{locale.username}")
+      input(type="text",name="username",value="administrator",placeholder="#{locale.username}")
       br
-      input(type="password",name="password",value="",placeholder="#{locale.password}")
+      input(type="password",name="password",value="password",placeholder="#{locale.password}")
       br
       input(type="submit",name="cmdLogin",value="#{locale.button}",class="btn btn-primary")

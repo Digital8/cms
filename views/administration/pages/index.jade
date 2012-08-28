@@ -1,0 +1,36 @@
+extends ../../layout
+
+block content
+  div(class="span8")
+    legend
+      h3 Web Pages 
+        small Administration
+    include ../../flashify
+
+    table.table.table-striped.table-hover
+      thead
+        tr
+          th URL
+          th Method
+          th Status
+          th
+      tbody
+        each page in pages
+          tr
+            td.span4= page.url
+            td= page.action.toUpperCase()
+            if (page.enabled == 1)              
+              td
+                i.icon-thumbs-up
+                |  online
+            else
+              td
+                i.icon-thumbs-down
+                |  offline
+            td
+              a(href="#{globals.href.admin}page/#{page.id}/edit")
+                i.icon-edit
+              a(href="#{globals.href.admin}page/#{page.id}/delete")
+                i.icon-trash
+                
+    a.btn.btn-primary(href="#{globals.href.admin}page/add") Add Page

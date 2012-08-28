@@ -1,25 +1,17 @@
 extends ../layout
 
 block content
-  div.row-fluid
-    div.span3
-      div.well.sidebar-nav
-        ul.nav.nav-list
-          li
-            img(src="http://placehold.it/125x125")
-          li
-            p Standard User
-    div.span9
-      ul(id="myTab",class="nav nav-tabs")
+  div.span3
+    div.well.sidebar-nav
+      ul.nav.nav-list
         li
-          h1= user.alias
-            small &nbsp; #{user.displayName}
-        li(class="active offset1")
-          a(href="#home",data-toggle="tab") Profile
+          img(src="http://placehold.it/125x125")
         li
-          a(href="#profile",data-toggle="tab") Questions 
-
-        li
-          a(href="#profile",data-toggle="tab") Another Menu
-      
-      p Lets display some user information here
+          p Standard User
+  div.span5
+    legend
+      h3= user.alias
+        small &nbsp; #{user.displayName}
+    
+    p Lets display some user information here
+  

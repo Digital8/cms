@@ -1,0 +1,26 @@
+extends ../../layout
+
+block content
+  div.span7
+    legend
+      h3 Members 
+        small Administration
+    span.pull-right
+      input(type="text",placeholder="Search...")
+    table.table.table-striped.table-hover
+      thead
+        tr
+          th ID
+          th Username
+          th Actions
+      tbody
+        each member in members
+          tr
+            td= member.id
+            td
+              a(href="#{globals.href.admin}member/#{member.alias}") #{member.alias}
+            td
+              i.icon-edit
+              i.icon-trash
+    a.btn.btn-primary Add Member
+  

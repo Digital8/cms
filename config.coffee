@@ -11,7 +11,7 @@
 module.exports =
   globals:
     site:
-      name: 'Digital8 CMS'
+      name: 'Super awthum CMS name'
     href:
       admin   : '/administration/'
       images  : '/images/'

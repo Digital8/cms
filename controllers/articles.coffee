@@ -1,21 +1,18 @@
 ###
- * Skeleton Controller
+ * Articles Controller
  *
- * Controller Template For Plugin
+ * Plugin to allow website for articles
  *
- * @package   Digital8 CMS
- * @author    Brendan Scarvell <brendan@digital8.com.au>
+ * @package   Time for Advice
+ * @author    Brendan Scarvell <bscarvell@gmail.com>
  * @copyright Copyright (c) 2012 - Current
  ###
 
 system = require '../system'
 
-helpers = {}
-
-models = {}
-
 exports.index = (req,res) ->
-  
+  res.render 'articles/index'
+
 exports.view = (req,res) ->
 
 exports.add = (req,res) ->

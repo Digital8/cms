@@ -18,4 +18,7 @@ exports.getUserById = (user_id, callback) ->
   db.query "SELECT * FROM #{db.prefix}users WHERE user_id = ?", [user_id], callback
   
 exports.getUserByAlias = (user_alias, callback) ->
-  db.query "SELECT * FROM #{db.prefix}users WHERE alias = ?", [user_alias], callback
+  db.query "SELECT * FROM #{db.prefix}users WHERE user_alias = ?", [user_alias], callback
+
+exports.findAll = (callback) ->
+  db.query "SELECT * FROM #{db.prefix}users", callback

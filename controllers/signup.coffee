@@ -41,27 +41,19 @@ formSchema = [
     class: 'btn btn-primary'
 ]
 
-# GET
 exports.index = (req,res) ->
   res.render 'sign-up/index', formSchema: formSchema
   
-# GET
 exports.view = (req,res) ->
 
-# GET
 exports.add = (req,res) ->
 
-# PUT
 exports.create = (req,res) ->
   req.flash('info','do the sign up process')
   res.redirect 'back'
   
-
-# GET
 exports.edit = (req,res) ->
 
-# POST
 exports.update = (req,res) ->
 
-# DEL
 exports.destroy = (req,res) ->

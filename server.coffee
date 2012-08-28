@@ -49,6 +49,13 @@ app.configure ->
     res.locals.modules = system.config.modules ? {} # If modules exist, allow views to check its status
     res.locals.objUser = new classes.user [] # Empty user object
     
+    delete app.routes.get
+    delete app.routes.post
+    delete app.routes.put
+    delete app.routes.delete
+    require('./routes')(app)
+    
+
     models.page.getNavigation (err, pageResults) ->
       if err then throw err
       pages = []
@@ -59,7 +66,7 @@ app.configure ->
         pages[i] = new classes.page pageResults[i]
         i++  
         
-      res.locals.pages = pages or {}
+      res.locals.navPages = pages or {}
       
       if req.session.user_id?
         
@@ -70,15 +77,12 @@ app.configure ->
             done()
       else
         done()
-
+        
   app.use express.static "#{__dirname}/public"
   app.use app.router
   
 server = app.listen system.config.port
 
-
-# Application routes
-require('./routes')(app)
 
 console.log "Server started on port #{system.config.port}"
 

@@ -23,25 +23,23 @@ helpers =
   checkModule: system.load.helper 'checkModule'
   checkRights: system.load.helper 'checkRights'
 
+models = 
+  pages: system.load.model 'page'
+
 module.exports = (app) ->
-  # index
-  app.get '/', controllers.index.index
   
-  # Sign Up
-  app.get '/sign-up', helpers.checkModule('register'), controllers.signup.index
-  app.put '/sign-up', helpers.checkModule('register'), controllers.signup.create
-  
-  # Misc Routes
-  app.get '/login', helpers.checkModule('login'), controllers.misc.login
-  app.post '/login', helpers.checkModule('login'), controllers.misc.login
-  
-  app.get '/logout', controllers.misc.logout
-  
-  
-  # Administration
-  app.get '/administration', controllers.admin_index.index
-  app.get '/administration/pages/:id/edit', helpers.checkModule('pages'), helpers.requireAuth, helpers.checkRights('CP'), controllers.admin_pages.edit
-  app.put '/administration/pages/:id/edit', helpers.checkModule('pages'), helpers.requireAuth, helpers.checkRights('CP'), controllers.admin_pages.update
-  
-  # Custom pages
-  app.all '*', controllers.page.view
+  # Get all routes out of the database and bind the,
+  models.pages.getRoutes (err, routes) ->
+    # Throw error if exists. No point continuing if we cant get routes working!
+    if err then throw err
+    for route in routes
+      switch route.page_action.toLowerCase()
+        when 'get' then app.get route.page_url, controllers[route.page_controller.split('.')[0]][route.page_controller.split('.')[1]]
+        when 'post' then app.post route.page_url, controllers[route.page_controller.split('.')[0]][route.page_controller.split('.')[1]]
+        when 'put' then app.put route.page_url, controllers[route.page_controller.split('.')[0]][route.page_controller.split('.')[1]]
+        when 'del' then app.del route.page_url, controllers[route.page_controller.split('.')[0]][route.page_controller.split('.')[1]]
+        when 'delete' then app.del route.page_url, controllers[route.page_controller.split('.')[0]][route.page_controller.split('.')[1]]
+        else app.get route.page_url, controllers[route.page_controller.split('.')[0]][route.page_controller.split('.')[1]]
+      
+    # Then bind rest of the current views
+    app.all '*', controllers.page.view

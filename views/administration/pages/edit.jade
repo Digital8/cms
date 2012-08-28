@@ -3,19 +3,63 @@ extends ../../layout
 block content
   div(class="span7")
     legend
-      h1 Edit Page
+      h3 Edit Page 
     include ../../flashify
     
-    form(action="#{globals.href.admin}pages#{page.url}/edit",method="post")
+    form(action="#{globals.href.admin}page/#{page.id}/edit",method="post")
       input(type="hidden",name="_method",value="put")
-      input.span6(type="text",value="#{page.url}",placeholder="/URL",name="url")
-      br
-      textarea.span6(rows=10,placeholder="Page Content",name="content")= page.content
-      br
-      input(type="checkbox",value="1")
-      small  Disable HTML
-      span.offset1
+      p Page Type: &nbsp;&nbsp;
+        input.page_type(type="radio",checked,name="page_type",value="0")
+        |  Static
+        span.offset1
+        input.page_type(type="radio",name="page_type",value="1")
+        |  Plugin
+      p URL: 
+        input.span6(type="text",value="#{page.url}",placeholder="/URL",name="url")
+      p Status: 
+        select(name="online")
+          if(page.enabled == 1)
+            option(value=1,selected) Online
+            option(value=0) Offline
+          else
+            option(value=1) Online
+            option(value=0,selected) Offline
+      p Title: 
+        input.span6(type="text",value="#{page.title}",placeholder="Title of Page (Navigation)",name="title")
+      div#static
+        p Header: 
+          input.span6(type="text",value="#{page.header}",placeholder="Page Header",name="header")
+        textarea.span6(rows=10,placeholder="Page Content",name="content")= page.content
+        br
+        input(type="checkbox",value="1")
+        small  Disable HTML
+      div#dynamic(style="display:none")
+        p Action: 
+          select(name="action")
+            option GET
+            option POST
+            option PUT
+            option DEL
+          
+        p Plugin: 
+          select(name="controller")
+            - each controller in controllers
+              - if(controller == page.controller)
+                option(selected)= controller
+              - else
+                option= controller
+        p Function: 
+          input(type="text",value="#{page.method}")
+       
       input(type="checkbox",value="1",checked)
       small  Display in Navigation
       p
       input.btn.btn-primary(type="submit",name="submit",value="Update")
+      
+      script
+        $(document).ready(function(){
+          $('.page_type').change(function(){
+            $("#static").toggle();
+            $("#dynamic").toggle();
+          });
+        });

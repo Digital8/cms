@@ -3,7 +3,9 @@ extends ../layout
 block content
   div(class="span7")
     legend
-      h1 Administration
+      h3 Administration
     include ../flashify
     
-    div.well Display the links and stuff here
+    each admin_page in admin_pages
+      div.span3
+        a(href="#{globals.href.admin}#{admin_page.admin_link}")= admin_page.admin_title

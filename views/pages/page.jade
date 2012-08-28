@@ -1,0 +1,11 @@
+extends ../layout
+
+block content
+  div(class="span8")
+   legend
+     h3= objPage.header
+   include ../flashify
+   if (objPage.htmlEnabled == 1)
+     p !{objPage.content}
+   else
+     p #{objPage.content}

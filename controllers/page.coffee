@@ -24,36 +24,29 @@ classes =
 helpers =
   requireAuth: system.load.helper 'requireAuth'
 
-# GET
 exports.index = (req,res) ->
   
-# GET
 exports.view = (req,res) ->
   url = req.params
   
   models.page.getPageByUrl url, (err,results) ->
     if err then console.log err
     if results.length == 0
-      res.render 'errors/404'
+      if url.pop() is '/' then res.render 'errors/no_index' else res.render 'errors/404'
     else
       page = new classes.page results.pop()
       if page.restricted
         helpers.requireAuth req, res, ->
-          res.render 'page', objPage: page
+          res.render 'pages/page', objPage: page
       else
-        res.render 'page', objPage: page
-
-# GET
+        res.render 'pages/page', objPage: page
+        
 exports.add = (req,res) ->
-
-# POST
+  
 exports.create = (req,res) ->
-
-# GET
+  
 exports.edit = (req,res) ->
-
-# PUT
+  
 exports.update = (req,res) ->
 
-# DEL
 exports.destroy = (req,res) ->

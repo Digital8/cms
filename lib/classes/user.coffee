@@ -33,10 +33,10 @@ module.exports = class User
 	  return (@level >= accountLevel.admin) ? true : false
 	  
 	isRoot: ->
-	  return (@level == accountLevel.root) ? true : false
+	  return (@level is accountLevel.root) ? true : false
 
 	isBanned: ->
-	   return (@level == accountLevel.banned) ? true : false
+	   return (@level is accountLevel.banned) ? true : false
 	   
 	isOwner: (owner_id) ->
 	  
@@ -51,16 +51,16 @@ module.exports = class User
 	  if @id is 0 then return false else return true
 	  
 	checkRights: (right) ->
-	   if @isRoot() 
-  	    return true
-  	  else
-  	    if not right?
-          return @userRights.length
-  	    else
-    	    authorized = false
-    	    for priv in @userRights
-    	      if priv == right
-    	        authorized = true
-    	        break
+	  if @isRoot()
+	    return true
+	  else
+	    if not right?
+        return @userRights.length
+	    else
+  	    authorized = false
+  	    for priv in @userRights
+  	      if priv == right
+  	        authorized = true
+  	        break
 
-  	    return authorized
+	    return authorized

@@ -9,6 +9,7 @@
  ###
  
 system = require '../system'
+fs = require 'fs'
 
 # Load in database models
 models = 
@@ -23,8 +24,22 @@ classes =
 helpers =
   requireAuth: system.load.helper 'requireAuth'
 
+controllers = []
+fs.readdirSync("./controllers").forEach (module) -> 
+  if module.split('.')[0] != '__skeleton' then controllers.push(module.split('.')[0])
+  
 # GET
 exports.index = (req,res) ->
+  models.page.getAllPages (err, pageResults) ->
+    pages = []
+    i=0
+  
+    # Create a page object of each page
+    for [0...pageResults.length]
+      pages[i] = new classes.page pageResults[i]
+      i++
+    
+    res.render 'administration/pages/index', pages: pages or {}
   
 # GET
 exports.view = (req,res) ->
@@ -37,17 +52,28 @@ exports.create = (req,res) ->
 
 # GET
 exports.edit = (req,res) ->
-  url = req.params.id
-  models.page.getPageByUrl "/#{url}", (err, page) ->
+  id = req.params.id
+  models.page.getPageById id, (err, page) ->
     if err then throw err
-    page = new classes.page page.pop()
-    res.render 'administration/pages/edit', page: page
+    if page.length is 0
+      req.flash('error','Page doesn\'t exist')
+    else
+      page = new classes.page page.pop()
+        
+    res.render 'administration/pages/edit', page: page or {}, controllers: controllers
 
 # PUT
 exports.update = (req,res) ->
-  console.log req.body
-  req.flash('info','some message here')
-  res.redirect 'back'
+  fields = req.body
+  fields.id = req.params.id
+  
+  models.page.update fields, (err, results) ->
+    if err 
+      req.flash('error', "DB Error: #{err.code}")
+    else
+      req.flash('success','Page has been updated')
+    
+    res.redirect 'back'
 
 # DEL
 exports.destroy = (req,res) ->
